@@ -1,7 +1,7 @@
 {
   "name": "newsprint",
   "version": "0.1.0",
-  "description": "Create (and send) a newsletter/resume of your sprint using the information in your Trello.",
+  "description": " Create (and send) a newsletter/resume of your sprint using the information in your Trello.",
   "main": "bin/index.js",
   "dependencies": {
     "async": "^0.9.0",

@@ -1,8 +1,10 @@
 # NewSprint
 
-A little module that allow you to create and send a newsletter/resume of your current sprint/work using the information reflected in your Trello board.
+A nodejs module that allow you to create and send a newsletter/resume of your current sprint/work using the information reflected in your Trello board.
 
 > Inspired in this article of The Changelog: [https://changelog.com/trello-as-a-cms/]()
+
+## Preview
 
 ![Preview NewSprint](http://i.imgur.com/Szm1KNi.png)
 
@@ -15,7 +17,7 @@ npm install newsprint -g
 ## Usage
 
 ```
-newsprinte create [options]
+newsprint create [options]
 ```
 
 ### Options
