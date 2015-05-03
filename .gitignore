@@ -1,7 +1,7 @@
 # Custom
 config.json
 sprint.json
-preview.html
+*.html
 .DS_Store
 
 # Logs

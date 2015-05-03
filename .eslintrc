@@ -4,6 +4,7 @@
     "browser": true
   },
   "globals": {
+    "libs": true
   },
   "rules": {
     "quotes": [

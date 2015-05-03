@@ -5,33 +5,33 @@
 /**
  * Main modules
  */
-var logger = require('winston');
 var program = require('commander');
+var path = require('path');
 var pkg = require('../package.json');
+
 
 /**
  * Private modules
  */
-var actions = {
-	create: require('./_create')
-};
+var actions = require('./actions');
+var libs = require('./libs');
+
 
 /**
- * Logger setup
+ * Globals
  */
 
-//Configure winston CLI
-logger.cli();
+GLOBAL.libs = libs;
 
-//Remove the default transport
-logger.remove(logger.transports.Console);
 
-//Set logging using the console
-logger.add(logger.transports.Console, {
-	level: 'info',
-	silent: false,
-	colorize: true
-});
+/**
+ * Private variables
+ */
+var _paths = {
+	root: path.normalize(__dirname),
+	current: path.normalize(process.cwd())
+};
+
 
 /**
  * Program commands
@@ -69,16 +69,26 @@ program
 			options.send = env.send;
 		}
 
-		actions.create.init(options, function(err){
+		actions.create.init(options, _paths, function(err){
+
 			if(err){
-				logger.error(err);
+
+				libs.logger.error(err);
+
+			} else {
+
+				libs.logger.info('Thanks for use Newsprint! :D');
+
 			}
+
 			process.exit();
+
 		});
 
 	});
 
 program.parse(process.argv);
+
 
 /**
  * Default behavior
