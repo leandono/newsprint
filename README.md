@@ -1,8 +1,10 @@
 # NewSprint
 
-A nodejs module that allow you to create and send a newsletter/resume of your current sprint/work using the information reflected in your Trello board.
+Create and send a beautiful newsletter/resume of your current sprint/work using the information reflected in your Trello board.
 
-> Inspired in this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
+> Inspired by this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
+
+NewSprint can create the newsletter reading all the cards in the board (or only in certain lists), showing descriptions, labels, members, covers and status, with introduction and finals texts (see [customization](https://github.com/rodati/newsprint#sprintjson-optional) for more) and send the result using one of [these services](https://github.com/andris9/nodemailer-wellknown#supported-services).
 
 ## Preview
 
@@ -47,9 +49,9 @@ newsprinte create --config ./config.json --sprint ./sprint.json --send
 
 ## Configuration
 
-Before use the module, you need to create some configuration files to get the information from Trello, customize the newsletter and send it.
+Before use the module, you need to create some configuration files to get the information from Trello, create the newsletter and send it. 
 
-**Note**: You can get a dummy copy to use in the `tmpl` folder.
+**Note**: You can get a dummy copy to use in the [tmpl](https://github.com/rodati/newsprint/tree/master/tmpl) folder.
 
 ### config.json (required)
 
