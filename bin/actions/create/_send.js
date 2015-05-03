@@ -64,7 +64,7 @@ function init(html, configuration, paths, callback) {
 
 	} else {
 
-		callback('To send the newsletter is required some neccesary information in your sprint file (mail.from, mail.to, mail.subject). Skipping...');
+		callback('To send the newsletter is required some neccesary information in your sprint file (mail.from, mail.to, mail.subject). Skipping... \n https://github.com/rodati/newsprint#sprintjson-optional');
 
 	}
 

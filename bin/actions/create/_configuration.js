@@ -53,7 +53,7 @@ function _getConfiguration(options, next){
 				if(!exists){
 
 					//Exit
-					callback('The configuration doen\'t exists. Please create one first!');
+					callback('The configuration doen\'t exists. Please create one first! \n https://github.com/rodati/newsprint#configuration');
 
 				} else {
 
@@ -156,9 +156,6 @@ function _validateConfiguration(configuration, next){
 						optional: true,
 						type: 'object',
 						properties: {
-							enabled: {
-								type: 'boolean'
-							},
 							service: {
 								type: 'string'
 							},
@@ -174,7 +171,7 @@ function _validateConfiguration(configuration, next){
 			if(inspector.validate(schema, configuration.config).valid === false){
 
 				//Exit!
-				callback('The configuration file doesn\'t respect the required format. Please check it!');
+				callback('The configuration file doesn\'t respect the required format. Please check it! \n https://github.com/rodati/newsprint#configjson-required');
 
 			} else {
 
@@ -277,7 +274,7 @@ function _validateConfiguration(configuration, next){
 				if(inspector.validate(schema, configuration.sprint).valid === false){
 
 					//Exit!
-					callback('The sprint file doesn\'t respect the required format. Please check it!');
+					callback('The sprint file doesn\'t respect the required format. Please check it! \n https://github.com/rodati/newsprint#sprintjson-optional');
 
 				} else {
 
