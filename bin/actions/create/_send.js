@@ -10,17 +10,25 @@ _.mixin(require('lodash-deep'));
 
 
 /**
- * Try to send the newsletter
- * @param  {string}  htmlData  The HTML of the newsletter
+ * Private constants
  */
-function init(html, options, paths, callback) {
+var _SUBJECT = '[Newsprint] Sprint Newsletter';
+
+/**
+ * Try to send the newsletter
+ * @param {string}  htmlData  The HTML of the newsletter
+ * @param {object} configuration Configuration for the job
+ * @param {object} paths Paths of the module and executation
+ * @param {function} callback Async callback
+ */
+function init(html, configuration, paths, callback) {
 
 	//Check if the configuration for the email exists
-	if(_.deepGet(options, 'sprint.mail')){
+	if(_.deepGet(configuration, 'sprint.mail')){
 
 		//Mail options
 		var mailOptions = {
-			subject: _.deepGet(options, 'sprint.mail.subject') ? options.sprint.mail.subject : '[Newsprint] Sprint Newsletter', 
+			subject: _.deepGet(configuration, 'sprint.mail.subject') ? configuration.sprint.mail.subject : _SUBJECT, 
 			text: htmlToText.fromString(html),
 			html: html
 		};
@@ -29,7 +37,7 @@ function init(html, options, paths, callback) {
 		var transporter = nodemailer.createTransport();
 
 		//Try to send
-		transporter.sendMail(_.assign(mailOptions, options.sprint.mail), function(err, info){
+		transporter.sendMail(_.assign(mailOptions, configuration.sprint.mail), function(err, info){
 
 			//Check errors
 			if(err){

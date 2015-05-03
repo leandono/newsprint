@@ -22,39 +22,32 @@ _.mixin({
 
 /**
  * Request the data to Trello to create the newsletter
+ * @param {object} configuration Configuration for the job
+ * @param {object} paths Paths of the module and executation
+ * @param {function} callback Async callback
  */
-function init(options, paths, callback) {
+function init(configuration, paths, callback) {
 
 	//Create a new instance of Trello
-	var t = new Trello(options.config.trello.key, options.config.trello.token);
+	var t = new Trello(configuration.config.trello.key, configuration.config.trello.token);
 
 	//Get all information in parallel
 	async.parallel({
 
 		//Get the list information
 		lists: function(next){
-			_getLists(t, options, next);
+			_getLists(t, configuration, next);
 		},
 
 		//Get extra infomation to show
 		extras: function(next){
-			_getExtras(t, options, next);
+			_getExtras(t, configuration, next);
 		}
 
 	}, function(err, data){
 
-		//Check errors
-		if(err) {
-
-			//Exit
-			callback(err);
-
-		} else {
-
-			//Next
-			callback(null, data);
-
-		}
+		//Next
+		callback(err, data);
 
 	});
 
@@ -63,9 +56,10 @@ function init(options, paths, callback) {
 /**
  * Get the lists information of the board
  * @param  {function}  t  Trello instance
+ * @param  {object} configuration Configuration for the job
  * @param  {function}  next  Async callback
  */
-function _getLists(t, options, next){
+function _getLists(t, configuration, next){
 
 	//Params for the service
 	var params = [
@@ -75,7 +69,7 @@ function _getLists(t, options, next){
 	];
 
 	//Get the lists of the board
-	t.get('/1/boards/' + options.config.trello.board + '/lists?' + params.join('&'), function(err, data) {
+	t.get('/1/boards/' + configuration.config.trello.board + '/lists?' + params.join('&'), function(err, data) {
 
 		//Check errors
 		if(err){
@@ -107,9 +101,10 @@ function _getLists(t, options, next){
 /**
  * Get extra information of the cards
  * @param  {function}  t  Trello instance
+ * @param  {object} configuration Configuration for the job
  * @param  {function}  next  Async callback
  */
-function _getExtras(t, options, next){
+function _getExtras(t, configuration, next){
 
 	//Params for the service
 	var params = [
@@ -121,7 +116,7 @@ function _getExtras(t, options, next){
 	];
 
 	//Get the lists of the board
-	t.get('/1/boards/' + options.config.trello.board + '/cards?' + params.join('&'), function(err, data) {
+	t.get('/1/boards/' + configuration.config.trello.board + '/cards?' + params.join('&'), function(err, data) {
 
 		//Check errors
 		if(err){

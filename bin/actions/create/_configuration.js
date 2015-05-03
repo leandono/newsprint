@@ -5,7 +5,6 @@
  */
 var async = require('async');
 var fs = require('fs-extra');
-var JSON5 = require('json5');
 var inspector = require('schema-inspector');
 
 
@@ -14,43 +13,33 @@ var inspector = require('schema-inspector');
  */
 function init(options, paths, callback) {
 
-	//Run the steps in serie
-	async.series([
+	//Run the steps in a waterfall
+	async.waterfall([
 
 		//Check the configuration
 		function(next){
-			_checkConfiguration(options, next);
+			_getConfiguration(options, next);
 		},
 
 		//Validate the configuration
-		function(next){
-			_validateConfiguration(options, next);
+		function(configuration, next){
+			_validateConfiguration(configuration, next);
 		}
 
-	], function(err){
+	], function(err, configuration){
 
-		//Check errors
-		if(err) {
-
-			//Exit
-			callback(err);
-
-		} else {
-
-			//Next
-			callback();
-
-		}
+		//Next
+		callback(err, configuration);
 
 	});
 
 }
 
 /**
- * Check if the required configuration exists
+ * Get the configuration if exists
  * @param  {function}  next  Async callback
  */
-function _checkConfiguration(options, next){
+function _getConfiguration(options, next){
 
 	//Check in parallel
 	async.parallel([
@@ -68,13 +57,19 @@ function _checkConfiguration(options, next){
 
 				} else {
 
-					var file = fs.readFileSync(options.config);
+					var file = fs.readFileSync(options.config, {
+						encoding: 'utf8'
+					});
 
-					//TODO: Use try catch
-					options.config = JSON5.parse(file);
+					//Try to parse the information
+					libs.utils.tryJSON.parse(file, function(err, config){
 
-					//Next!
-					callback();
+						options.config = config;
+
+						//Next!
+						callback(err);
+
+					});
 
 				}
 
@@ -90,19 +85,29 @@ function _checkConfiguration(options, next){
 
 				if(exists){
 
-					var file = fs.readFileSync(options.sprint);
+					var file = fs.readFileSync(options.sprint, {
+						encoding: 'utf8'
+					});
 
-					//TODO: Use try catch
-					options.sprint = JSON5.parse(file);
+					//Try to parse the information
+					libs.utils.tryJSON.parse(file, function(err, sprint){
+
+						options.sprint = sprint;
+
+						//Next!
+						callback(err);
+
+					});
 
 				} else {
 
-					//Empty the prop
-					options.sprint = null;
+					//Set as false
+					options.sprint = false;
+
+					//Next!
+					callback();
 
 				}
-
-				callback();
 
 			});
 
@@ -111,7 +116,7 @@ function _checkConfiguration(options, next){
 	], function(err){
 
 		//Next!
-		next(err);
+		next(err, options);
 
 	});
 
@@ -121,7 +126,7 @@ function _checkConfiguration(options, next){
  * Validate that the configuration is correct
  * @param  {function}  next  Async callback
  */
-function _validateConfiguration(options, next){
+function _validateConfiguration(configuration, next){
 
 	//Validate in parallel
 	async.parallel([
@@ -166,7 +171,7 @@ function _validateConfiguration(options, next){
 			};
 
 			//Check if the schema is valid
-			if(inspector.validate(schema, options.config).valid === false){
+			if(inspector.validate(schema, configuration.config).valid === false){
 
 				//Exit!
 				callback('The configuration file doesn\'t respect the required format. Please check it!');
@@ -184,7 +189,7 @@ function _validateConfiguration(options, next){
 		function(callback){
 
 			//Check if there are a sprint object
-			if(options.sprint){
+			if(configuration.sprint){
 
 				//Schema validation
 				var schema = {
@@ -269,7 +274,7 @@ function _validateConfiguration(options, next){
 				};
 
 				//Check if the schema is valid
-				if(inspector.validate(schema, options.sprint).valid === false){
+				if(inspector.validate(schema, configuration.sprint).valid === false){
 
 					//Exit!
 					callback('The sprint file doesn\'t respect the required format. Please check it!');
@@ -293,7 +298,7 @@ function _validateConfiguration(options, next){
 	], function(err){
 
 		//Next!
-		next(err);
+		next(err, configuration);
 
 	});
 

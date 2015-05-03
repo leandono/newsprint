@@ -15,37 +15,30 @@ _.mixin(require('lodash-deep'));
 
 /**
  * Create the HTML for the newsletter using the data requested to Trello
- * @param  {object}  data  The data request to Trello
+ * @param {object}  data  The data request to Trello
+ * @param {object} configuration Configuration for the job
+ * @param {object} paths Paths of the module and executation
+ * @param {function} callback Async callback
  */
-function init(data, options, paths, callback) {
+function init(data, configuration, paths, callback) {
 
 	//Process in a waterfall
 	async.waterfall([
 
 		//First, sort and filter the data
 		function(next){
-			_sortFilterData(data, options, paths, next);
+			_sortFilterData(data, configuration, paths, next);
 		},
 
 		//Then, create the content
 		function(dataProcessed, next){
-			_createHtml(dataProcessed, options, paths, next);
+			_createHtml(dataProcessed, configuration, paths, next);
 		}
 
 	], function(err, html){
 
-		//Check errors
-		if(err) {
-
-			//Exit
-			callback(err);
-
-		} else {
-
-			//Next
-			callback(null, html);
-
-		}
+		//Next
+		callback(err, html);
 
 	});
 
@@ -53,22 +46,24 @@ function init(data, options, paths, callback) {
 
 /**
  * Sort and filter the data
- * @param  {object}  data  The data request to Trello
- * @param  {function}  next  Async callback
+ * @param {object}  data  The data request to Trello
+ * @param {object} configuration Configuration for the job
+ * @param {object} paths Paths of the module and executation
+ * @param {function} next Async callback
  */
-function _sortFilterData(data, options, paths, next){
+function _sortFilterData(data, configuration, paths, next){
 
 	//Check if there are a customization for the lists
-	if(_.deepGet(options.sprint, 'content.lists')){
+	if(_.deepGet(configuration, 'sprint.content.lists')){
 
 		//Filtered data
-		var filtered = _.findByValues(data.lists, 'name', _.pluck(options.sprint.content.lists, 'name'));
+		var filtered = _.findByValues(data.lists, 'name', _.pluck(configuration.sprint.content.lists, 'name'));
 
 		//Sortered data
 		var sortered = [];
 
 		//For each list
-		async.each(options.sprint.content.lists, function(list, callback){
+		async.each(configuration.sprint.content.lists, function(list, callback){
 
 			//Find the list
 			var finded = _.find(filtered, { 'name': list.name });
@@ -109,10 +104,12 @@ function _sortFilterData(data, options, paths, next){
 
 /**
  * Create the HTML for the newsletter
- * @param  {object}  data  The data request to Trello filtered/sortered (or not)
- * @param  {function}  next  Async callback
+ * @param {object}  filteredData  The data request to Trello filtered/sortered (or not)
+ * @param {object} configuration Configuration for the job
+ * @param {object} paths Paths of the module and executation
+ * @param {function} next Async callback
  */
-function _createHtml(filteredData, options, paths, next){
+function _createHtml(filteredData, configuration, paths, next){
 
 	var tmplFolder = path.join(paths.root, '..', 'tmpl');
 	var template = path.join(tmplFolder, 'newsletter.tmpl.html');
@@ -155,8 +152,8 @@ function _createHtml(filteredData, options, paths, next){
 
 			//Create the HTML
 			var html = tmpl({
-				content: _.deepGet(options.sprint, 'content') || {},
-				template: _.deepGet(options.sprint, 'template') || {},
+				content: _.deepGet(configuration, 'sprint.content') || {},
+				template: _.deepGet(configuration, 'sprint.template') || {},
 				data: filteredData
 			});
 
@@ -179,7 +176,7 @@ function _createHtml(filteredData, options, paths, next){
 		function(html, callback){
 
 			//Ensure that the file exists
-			fs.ensureFile(options.output, function(err) {
+			fs.ensureFile(configuration.output, function(err) {
 
 				//Check errors
 				if(err){
@@ -189,7 +186,7 @@ function _createHtml(filteredData, options, paths, next){
 				} else {
 
 					//Write the HTML into the .html
-					fs.writeFile(options.output, html, function(error){
+					fs.writeFile(configuration.output, html, function(error){
 
 						//Check errors
 						if(error){
@@ -213,17 +210,8 @@ function _createHtml(filteredData, options, paths, next){
 
 	], function(err, dataHtml){
 
-		//Check errors
-		if(err) {
-
-			next(err);
-
-		} else {
-
-			//Next
-			next(null, dataHtml);
-
-		}
+		//Next
+		next(err, dataHtml);
 
 	});
 

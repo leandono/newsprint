@@ -1,36 +1,50 @@
 'use strict';
 
 /**
+ * Global modules
+ */
+var JSON5 = require('json5');
+var _ = require('lodash');
+
+/**
  * Function to test if a string is a valid JSON
  * @see http://stackoverflow.com/a/20392392
  * @param {string}   jsonString String representation of the JSON to try to parse
- * @return {object|bool} If is valid, return the JSON parsed, else false
+ * @param {function}   callback Callback to execute before the parsing
  */
-function parse(jsonString) {
+function parse(jsonString, callback) {
 
-	//Check that the parameter is a string
-	if (typeof jsonString === 'string' || jsonString instanceof String) {
+	//Check if the parameter is a string
+	if (_.isString(jsonString)) {
 
 		try {
 
-			var o = JSON.parse(jsonString);
+			var o = JSON5.parse(jsonString);
 
 			if (o && typeof o === 'object' && o !== null) {
-				return o;
+
+				callback(null, o);
+
 			}
 
 		} catch (err) {
 
-			logger(err);
-
-			return false;
+			callback(new Error('There were an error parsing the information: ' + err));
 
 		}
 
-	//Else, skip and return the object
 	} else {
 
-		return jsonString;
+		//If the parameter is an object, skip and return
+		if (_.isObject(jsonString)) {
+
+			callback(null, jsonString);
+
+		} else {
+
+			callback(new Error('Invalid information to parse'));
+
+		}
 
 	}
 

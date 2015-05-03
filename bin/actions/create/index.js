@@ -33,13 +33,13 @@ function init(cliOptions, paths, callback) {
 	//Create the options object
 	var options = _.assign(defaultOptions, cliOptions);
 
-	//Run the steps in waterfall
+	//Run the steps in a waterfall
 	async.waterfall([
 
 		//Setup the configuration
 		function(next){
 
-			_configuration.init(options, paths, function(err){
+			_configuration.init(options, paths, function(err, configuration){
 
 				//Check errors
 				if(err) {
@@ -50,7 +50,7 @@ function init(cliOptions, paths, callback) {
 
 					libs.logger.info('Configuration loaded successfully...');
 
-					next();
+					next(null, configuration);
 
 				}
 
@@ -59,9 +59,9 @@ function init(cliOptions, paths, callback) {
 		},
 
 		//Get the data from Trello
-		function(next){
+		function(configuration, next){
 
-			_data.init(options, paths, function(err, data){
+			_data.init(configuration, paths, function(err, data){
 
 				//Check errors
 				if(err) {
@@ -72,7 +72,7 @@ function init(cliOptions, paths, callback) {
 
 					libs.logger.info('Information from Trello getted successfully...');
 
-					next(null, data);
+					next(null, configuration, data);
 
 				}
 
@@ -81,9 +81,9 @@ function init(cliOptions, paths, callback) {
 		},
 
 		//Create the HTML for the newsletter
-		function(data, next){
+		function(configuration, data, next){
 
-			_html.init(data, options, paths, function(err, html){
+			_html.init(data, configuration, paths, function(err, html){
 
 				//Check errors
 				if(err) {
@@ -94,7 +94,7 @@ function init(cliOptions, paths, callback) {
 
 					libs.logger.info('Newsletter created succesfully...');
 
-					next(null, html);
+					next(null, configuration, html);
 
 				}
 
@@ -103,12 +103,12 @@ function init(cliOptions, paths, callback) {
 		},
 
 		//Try to send the newsletter
-		function(html, next){
+		function(configuration, html, next){
 
 			//Check if is neccesary send the newsletter
-			if(options.send){
+			if(configuration.send){
 
-				_send.init(html, options, paths, function(err){
+				_send.init(html, configuration, paths, function(err){
 
 					//Check errors
 					if(err) {
