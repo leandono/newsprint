@@ -2,7 +2,7 @@
 
 A nodejs module that allow you to create and send a newsletter/resume of your current sprint/work using the information reflected in your Trello board.
 
-> Inspired in this article of The Changelog: [https://changelog.com/trello-as-a-cms/]()
+> Inspired in this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
 
 ## Preview
 
