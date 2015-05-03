@@ -1,3 +1,9 @@
+# Custom
+config.json
+sprint.json
+preview.html
+.DS_Store
+
 # Logs
 logs
 *.log

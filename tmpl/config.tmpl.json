@@ -1,0 +1,20 @@
+{
+
+	//Trello configuration
+	"trello": {
+		"key": "<key>",
+		"token": "<token>",
+		"board": "<board>"
+	},
+
+	//Mailer configuration
+	"mailer": {
+		"enabled": false,
+		"service": "<service>",
+		"auth": {
+			"user": "<user>",
+			"pass": "<pass>"
+		}
+	}
+
+}

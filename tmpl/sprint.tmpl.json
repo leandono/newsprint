@@ -1,0 +1,36 @@
+{
+	"mail": {
+		"subject": "Lorem Ipsum News",
+		"from": "Lorem <ipsum@loremipsum.com>",
+		"to": "dolorem@loremipsum.com"
+	},
+	"content": {
+		"title": "Lorem Ipsum",
+		"subtitle": "Sprint Newsletter",
+		"intro": [
+			"# Welcome!",
+			"This is a simple introduction using markdown"
+		],
+		"lists": [{
+			"name": "Done",
+			"desc": "Finished tasks of the current sprint"
+		}, {
+			"name": "In Progress",
+			"desc": "Tasks in a early stage"
+		}],
+		"final": [
+			"# And that's all!",
+			"Cheers!"
+		]
+	},
+	"template": {
+		"styles": {
+			"header": {
+				"backgroundColor": "#eb5d40"
+			},
+			"headline": {
+				"backgroundColor": "#f08050"	
+			}
+		}
+	}
+}
