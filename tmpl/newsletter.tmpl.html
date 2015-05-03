@@ -953,7 +953,7 @@
 																							<table class="twelve columns">
 
 																								<!-- Label & members -->
-																								<% if((card.labels && card.labels.length) || (card.members && card.members.length)) { %>
+																								<% if((card.labels && card.labels.length) || (card.idMembers && card.idMembers.length)) { %>
 
 																									<tr>
 
@@ -978,14 +978,16 @@
 																										<!-- Members -->
 																										<td class="members six sub-columns last">
 
-																											<% if(card.members && card.members.length) { %>
+																											<% if(card.idMembers && card.idMembers.length) { %>
 
 																												<table>
 																													<tr>
 																														
-																														<% _.forEach(extras.members, function(member) { %>
+																														<% _.forEach(card.idMembers, function(idMember) { %>
 
 																															<td>
+
+																																<% var member = _.find(extras.members, { 'id': idMember }); %>
 
 																																<% if(member.avatarHash) { %>
 

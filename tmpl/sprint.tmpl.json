@@ -1,35 +1,144 @@
 {
+
+	/**
+	 * Options to send the email properly
+	 */
 	"mail": {
+
+		/**
+		 * The subject. Required
+		 */
 		"subject": "Lorem Ipsum News",
-		"from": "Lorem <ipsum@loremipsum.com>",
-		"to": "dolorem@loremipsum.com"
+
+		/**
+		 * From who. Required
+		 */
+		"from": "Dude <dude@loremipsum.com>",
+
+		/**
+		 * To who. Required
+		 */
+		"to": "team@loremipsum.com",
+
+		/**
+		 * Whit copy. Optional
+		 */
+		"cc": "leader@loremipsum.com",
+
+		/**
+		 * Whit blind carbon copy. Optional
+		 */
+		"bcc": "ceo@loremipsum.com",
+
+		/**
+		 * Reply to. Optional
+		 */
+		"replyTo": "another.dude@loremipsum.com"
+
 	},
+
+	/**
+	 * Options to customize the content of the newsletter. Optional
+	 */
 	"content": {
+
+		/**
+		 * The title of the newsletter. Optional
+		 */
 		"title": "Lorem Ipsum",
+
+		/**
+		 * Subtitle. Optional
+		 */
 		"subtitle": "Sprint Newsletter",
+
+		/**
+		 * An introduction. Optional
+		 * Note: You can use markdown
+		 */
 		"intro": [
 			"# Welcome!",
 			"This is a simple introduction using markdown"
 		],
+
+		/**
+		 * The order and lists from Trello where get the information. Optional
+		 */
 		"lists": [{
+
+			/**
+			 * The name of the list. Required
+			 */
 			"name": "Done",
+
+			/**
+			 * A description of the list. Optional
+			 */
 			"desc": "Finished tasks of the current sprint"
+
 		}, {
+
+			/**
+			 * Another example
+			 */
 			"name": "In Progress",
 			"desc": "Tasks in a early stage"
+
 		}],
+
+		/**
+		 * A final text. Optional
+		 * Note: You can use markdown
+		 */
 		"final": [
 			"# And that's all!",
 			"Cheers!"
 		]
+
 	},
+
+	/**
+	 * Options to customize the template of the newsletter. Optional
+	 */
 	"template": {
+
+		/**
+		 * Some styles. Optional
+		 */
 		"styles": {
+
+			/**
+			 * Styles for the header. Optional
+			 */
 			"header": {
-				"backgroundColor": "#eb5d40"
+
+				/**
+				 * Background color. Optional
+				 */
+				"backgroundColor": "#0079bf",
+
+				/**
+				 * Color. Optional
+				 */
+				"color": "#FFF"
+
 			},
+
+			/**
+			 * Styles for the headlines. Optional
+			 */
 			"headline": {
-				"backgroundColor": "#f08050"	
+
+				/**
+				 * Background color. Optional
+				 */
+				"backgroundColor": "#0079bf",
+
+				/**
+				 * Color. Optional
+				 */
+				"color": "#FFF"
+				
 			}
 		}
 	}

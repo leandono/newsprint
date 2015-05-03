@@ -44,11 +44,11 @@ program
 
 program
 	.command('create')
-	.description('only create the newsletter')
+	.description('create the newsletter')
 	.option('-c, --config <path>', 'path for the configuration file. defaults to ./config.json')
-	.option('-p, --sprint <path>', 'path for the sprint file')
+	.option('-p, --sprint <path>', 'path for the sprint file. defaults to ./sprint.json')
 	.option('-o, --output <path>', 'path where save the newsletter html. defaults to ./newsletter.html')
-	.option('-s, --send', 'try to send by email the newsletter. by default false')
+	.option('-s, --send', 'try to send by email the newsletter. false by default')
 	.action(function(env){
 
 		var options = {};
