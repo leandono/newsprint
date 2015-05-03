@@ -1,6 +1,6 @@
 {
   "name": "newsprint",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": " Create (and send) a newsletter/resume of your sprint using the information in your Trello.",
   "main": "bin/index.js",
   "bin": {
