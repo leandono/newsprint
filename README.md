@@ -1,6 +1,6 @@
 # NewSprint
 
-Create and send a beautiful newsletter/resume of your current sprint/work using the information reflected in your Trello board.
+Create and send a beautiful, mobile-friendly, newsletter/resume of your current sprint/work using the information reflected in your Trello board.
 
 > Inspired by this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
 
