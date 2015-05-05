@@ -4,7 +4,7 @@ Create and send a beautiful, mobile-friendly, newsletter/resume of your current 
 
 > Inspired by this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
 
-NewSprint can create the newsletter reading all the cards in the board (or only in certain lists), showing descriptions, labels, members, covers and status, with introduction and finals texts (see [customization](https://github.com/rodati/newsprint#sprintjson-optional) for more) and send the result using one of [these services](https://github.com/andris9/nodemailer-wellknown#supported-services).
+NewSprint can create the newsletter reading all the cards in the board (or only in certain lists), showing descriptions, labels, members, covers and status, with introduction and final texts (see [customization](https://github.com/rodati/newsprint#sprintjson-optional) for more) and send the result using one of [these services](https://github.com/andris9/nodemailer-wellknown#supported-services).
 
 ## Preview
 
