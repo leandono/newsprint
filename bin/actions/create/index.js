@@ -92,7 +92,7 @@ function init(cliOptions, paths, callback) {
 
 				} else {
 
-					libs.logger.info('Newsletter created succesfully...');
+					libs.logger.info('Newsletter created successfully...');
 
 					next(null, configuration, html);
 
@@ -117,7 +117,7 @@ function init(cliOptions, paths, callback) {
 
 					} else {
 
-						libs.logger.info('Newsletter sended succesfully...');
+						libs.logger.info('Newsletter sent successfully...');
 
 						next();
 

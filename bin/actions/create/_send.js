@@ -12,7 +12,7 @@ _.mixin(require('lodash-deep'));
 /**
  * Private constants
  */
-var _SUBJECT = '[Newsprint] Sprint Newsletter';
+var _SUBJECT = '[NewSprint] Sprint Newsletter';
 
 /**
  * Try to send the newsletter

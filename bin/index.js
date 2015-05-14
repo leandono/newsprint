@@ -77,7 +77,7 @@ program
 
 			} else {
 
-				libs.logger.info('Thanks for use Newsprint! :D');
+				libs.logger.info('Thanks for use NewSprint!');
 
 			}
 
