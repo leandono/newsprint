@@ -4,13 +4,11 @@ Create and send a beautiful, mobile-friendly, newsletter/resume of your current 
 
 ## Resume
 
-NewSprint allow you create a newsletter reading all (or specific) cards in Trello, each one with their title, link, cover, description, labels and members. The result can be customized ([more](https://github.com/rodati/newsprint#sprintjson-optional)) and be sent using one of [these services](https://github.com/andris9/nodemailer-wellknown#supported-services).
-
-> This module is inspired by this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
-
-## Preview
+NewSprint allows you create a newsletter reading all (or some) cards of Trello, each one showing their title, link, cover, description, labels and members. The result can be [customized](https://github.com/rodati/newsprint#sprintjson-optional) and be sent using one of [these services](https://github.com/andris9/nodemailer-wellknown#supported-services).
 
 ![Preview NewSprint](http://i.imgur.com/Szm1KNi.png)
+
+> This module is inspired by this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
 
 ## Installation
 
@@ -29,7 +27,7 @@ newsprint create [options]
 - `-c, --config <path>` path for the configuration file. defaults to `./config.json`
 - `-p, --sprint <path>` path for the sprint file. defaults to `./sprint.json`
 - `-o, --output <path>` path where save the newsletter html. defaults to `./newsletter.html`
-- `-b, --open'` after created, open the newsletter in the browser. false by default
+- `-b, --open` after created, open the newsletter in the browser. false by default
 - `-s, --send` try to send by email the newsletter. `false` by default
 - `-h, --help` output usage information
 
