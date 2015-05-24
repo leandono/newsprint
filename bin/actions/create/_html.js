@@ -77,7 +77,7 @@ function _sortFilterData(data, configuration, paths, next) {
 				finded.desc = list.desc;
 
 				//If there are cards and labels to filter
-				if (list.labels.length && finded.cards.length) {
+				if (list.labels && finded.cards.length) {
 
 					//Check if the card has some specific label
 					var cards = _.filter(finded.cards, function(card) {
