@@ -765,8 +765,12 @@
 				font-weight: bold;
 			}
 			table.main .content .name h2{
-				font-size: 18px;
 				margin-bottom: 10px;
+			}
+			table.main .content .name h2 a{
+				font-size: 18px;
+				color: black;
+				text-decoration: underline;
 			}
 			table.main .content .label{
 				font-size: 12px;
@@ -964,7 +968,7 @@
 
 																												<%  _.forEach(card.labels, function(label) { %>
 
-																													<span class="label" style="background-color: <% if(label.color) { %> <%= label.color %> <% } else { %> red <% } %>;">
+																													<span class="label" style="background-color: <% if(label.color) { %> <%= label.color %> <% } else { %> black <% } %>;">
 																														<%= label.name %>
 																													</span> &nbsp;
 
@@ -1020,7 +1024,7 @@
 																								<!-- Name -->
 																								<tr>
 																									<td class="name twelve sub-columns left-text-pad">
-																										<h2><%= card.name %></h2>
+																										<h2><a href="<%= card.url %>" target="_blank"><%= card.name %></a></h2>
 																									</td>
 																									<!-- <td class="expander"></td> -->
 																								</tr>				

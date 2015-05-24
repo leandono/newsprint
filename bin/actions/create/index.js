@@ -7,7 +7,6 @@ var async = require('async');
 var _ = require('lodash');
 var path = require('path');
 
-
 /**
  * Private modules
  */
@@ -15,7 +14,6 @@ var _configuration = require('./_configuration');
 var _data = require('./_data');
 var _html = require('./_html');
 var _send = require('./_send');
-
 
 /**
  * App initialization
@@ -37,12 +35,12 @@ function init(cliOptions, paths, callback) {
 	async.waterfall([
 
 		//Setup the configuration
-		function(next){
+		function(next) {
 
-			_configuration.init(options, paths, function(err, configuration){
+			_configuration.init(options, paths, function(err, configuration) {
 
 				//Check errors
-				if(err) {
+				if (err) {
 
 					next(err);
 
@@ -59,12 +57,12 @@ function init(cliOptions, paths, callback) {
 		},
 
 		//Get the data from Trello
-		function(configuration, next){
+		function(configuration, next) {
 
-			_data.init(configuration, paths, function(err, data){
+			_data.init(configuration, paths, function(err, data) {
 
 				//Check errors
-				if(err) {
+				if (err) {
 
 					next(err);
 
@@ -81,12 +79,12 @@ function init(cliOptions, paths, callback) {
 		},
 
 		//Create the HTML for the newsletter
-		function(configuration, data, next){
+		function(configuration, data, next) {
 
-			_html.init(data, configuration, paths, function(err, html){
+			_html.init(data, configuration, paths, function(err, html) {
 
 				//Check errors
-				if(err) {
+				if (err) {
 
 					next(err);
 
@@ -103,15 +101,15 @@ function init(cliOptions, paths, callback) {
 		},
 
 		//Try to send the newsletter
-		function(configuration, html, next){
+		function(configuration, html, next) {
 
 			//Check if is neccesary send the newsletter
-			if(configuration.send){
+			if (configuration.send) {
 
-				_send.init(html, configuration, paths, function(err){
+				_send.init(html, configuration, paths, function(err) {
 
 					//Check errors
-					if(err) {
+					if (err) {
 
 						next(err);
 
@@ -133,10 +131,10 @@ function init(cliOptions, paths, callback) {
 
 		}
 
-	], function(err){
+	], function(err) {
 
 		//Check errors
-		if(err) {
+		if (err) {
 
 			callback(err);
 

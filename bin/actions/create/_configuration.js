@@ -7,7 +7,6 @@ var async = require('async');
 var fs = require('fs-extra');
 var inspector = require('schema-inspector');
 
-
 /**
  * App initialization
  */
@@ -17,16 +16,16 @@ function init(options, paths, callback) {
 	async.waterfall([
 
 		//Check the configuration
-		function(next){
+		function(next) {
 			_getConfiguration(options, next);
 		},
 
 		//Validate the configuration
-		function(configuration, next){
+		function(configuration, next) {
 			_validateConfiguration(configuration, next);
 		}
 
-	], function(err, configuration){
+	], function(err, configuration) {
 
 		//Next
 		callback(err, configuration);
@@ -39,18 +38,18 @@ function init(options, paths, callback) {
  * Get the configuration if exists
  * @param  {function}  next  Async callback
  */
-function _getConfiguration(options, next){
+function _getConfiguration(options, next) {
 
 	//Check in parallel
 	async.parallel([
 
 		//Check configuration
-		function(callback){
+		function(callback) {
 
 			//Check if exists
-			fs.exists(options.config, function (exists) {
+			fs.exists(options.config, function(exists) {
 
-				if(!exists){
+				if (!exists) {
 
 					//Exit
 					callback('The configuration doen\'t exists. Please create one first! \n https://github.com/rodati/newsprint#configuration');
@@ -62,7 +61,7 @@ function _getConfiguration(options, next){
 					});
 
 					//Try to parse the information
-					libs.utils.tryJSON.parse(file, function(err, config){
+					libs.utils.tryJSON.parse(file, function(err, config) {
 
 						options.config = config;
 
@@ -78,19 +77,19 @@ function _getConfiguration(options, next){
 		},
 
 		//Check sprint
-		function(callback){
+		function(callback) {
 
 			//Check if exists
-			fs.exists(options.sprint, function (exists) {
+			fs.exists(options.sprint, function(exists) {
 
-				if(exists){
+				if (exists) {
 
 					var file = fs.readFileSync(options.sprint, {
 						encoding: 'utf8'
 					});
 
 					//Try to parse the information
-					libs.utils.tryJSON.parse(file, function(err, sprint){
+					libs.utils.tryJSON.parse(file, function(err, sprint) {
 
 						options.sprint = sprint;
 
@@ -113,7 +112,7 @@ function _getConfiguration(options, next){
 
 		}
 
-	], function(err){
+	], function(err) {
 
 		//Next!
 		next(err, options);
@@ -126,13 +125,13 @@ function _getConfiguration(options, next){
  * Validate that the configuration is correct
  * @param  {function}  next  Async callback
  */
-function _validateConfiguration(configuration, next){
+function _validateConfiguration(configuration, next) {
 
 	//Validate in parallel
 	async.parallel([
 
 		//Validate the configuration
-		function(callback){
+		function(callback) {
 
 			//Schema validation
 			var schema = {
@@ -168,7 +167,7 @@ function _validateConfiguration(configuration, next){
 			};
 
 			//Check if the schema is valid
-			if(inspector.validate(schema, configuration.config).valid === false){
+			if (inspector.validate(schema, configuration.config).valid === false) {
 
 				//Exit!
 				callback('The configuration file doesn\'t respect the required format. Please check it! \n https://github.com/rodati/newsprint#configjson-required');
@@ -183,10 +182,10 @@ function _validateConfiguration(configuration, next){
 		},
 
 		//Validate the sprint
-		function(callback){
+		function(callback) {
 
 			//Check if there are a sprint object
-			if(configuration.sprint){
+			if (configuration.sprint) {
 
 				//Schema validation
 				var schema = {
@@ -238,7 +237,7 @@ function _validateConfiguration(configuration, next){
 								lists: {
 									optional: true,
 									type: 'array',
-									items: { 
+									items: {
 										type: 'object',
 										properties: {
 											name: {
@@ -271,7 +270,7 @@ function _validateConfiguration(configuration, next){
 				};
 
 				//Check if the schema is valid
-				if(inspector.validate(schema, configuration.sprint).valid === false){
+				if (inspector.validate(schema, configuration.sprint).valid === false) {
 
 					//Exit!
 					callback('The sprint file doesn\'t respect the required format. Please check it! \n https://github.com/rodati/newsprint#sprintjson-optional');
@@ -292,7 +291,7 @@ function _validateConfiguration(configuration, next){
 
 		}
 
-	], function(err){
+	], function(err) {
 
 		//Next!
 		next(err, configuration);

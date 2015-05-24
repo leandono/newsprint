@@ -12,7 +12,6 @@ var path = require('path');
 var _ = require('lodash');
 _.mixin(require('lodash-deep'));
 
-
 /**
  * Create the HTML for the newsletter using the data requested to Trello
  * @param {object}  data  The data request to Trello
@@ -26,16 +25,16 @@ function init(data, configuration, paths, callback) {
 	async.waterfall([
 
 		//First, sort and filter the data
-		function(next){
+		function(next) {
 			_sortFilterData(data, configuration, paths, next);
 		},
 
 		//Then, create the content
-		function(dataProcessed, next){
+		function(dataProcessed, next) {
 			_createHtml(dataProcessed, configuration, paths, next);
 		}
 
-	], function(err, html){
+	], function(err, html) {
 
 		//Next
 		callback(err, html);
@@ -51,10 +50,10 @@ function init(data, configuration, paths, callback) {
  * @param {object} paths Paths of the module and executation
  * @param {function} next Async callback
  */
-function _sortFilterData(data, configuration, paths, next){
+function _sortFilterData(data, configuration, paths, next) {
 
 	//Check if there are a customization for the lists
-	if(_.deepGet(configuration, 'sprint.content.lists')){
+	if (_.deepGet(configuration, 'sprint.content.lists')) {
 
 		//Filtered data
 		var filtered = _.findByValues(data.lists, 'name', _.pluck(configuration.sprint.content.lists, 'name'));
@@ -63,13 +62,15 @@ function _sortFilterData(data, configuration, paths, next){
 		var sortered = [];
 
 		//For each list
-		async.each(configuration.sprint.content.lists, function(list, callback){
+		async.each(configuration.sprint.content.lists, function(list, callback) {
 
 			//Find the list
-			var finded = _.find(filtered, { 'name': list.name });
+			var finded = _.find(filtered, {
+				'name': list.name
+			});
 
 			//If the list exists
-			if(finded){
+			if (finded) {
 
 				//Save the description
 				finded.desc = list.desc;
@@ -82,17 +83,17 @@ function _sortFilterData(data, configuration, paths, next){
 			//Go go!
 			callback();
 
-		}, function(){
+		}, function() {
 
 			//Save the references
 			data.lists = sortered;
 
 			//Next!
 			next(null, data);
-		
+
 		});
 
-	//Else, skip
+		//Else, skip
 	} else {
 
 		//Next!
@@ -109,7 +110,7 @@ function _sortFilterData(data, configuration, paths, next){
  * @param {object} paths Paths of the module and executation
  * @param {function} next Async callback
  */
-function _createHtml(filteredData, configuration, paths, next){
+function _createHtml(filteredData, configuration, paths, next) {
 
 	var tmplFolder = path.join(paths.root, '..', 'tmpl');
 	var template = path.join(tmplFolder, 'newsletter.tmpl.html');
@@ -119,14 +120,14 @@ function _createHtml(filteredData, configuration, paths, next){
 
 		//Read the template for the newsletter
 		//TODO: Allow custom templates
-		function(callback){
+		function(callback) {
 
 			//Read the base template
 			//TODO: Check if the file exists
-			fs.readFile(template, function (err, templateData) {
+			fs.readFile(template, function(err, templateData) {
 
 				//Check errors
-				if(err) {
+				if (err) {
 
 					callback(new Error('There was an error reading the template file: ' + err));
 
@@ -134,14 +135,14 @@ function _createHtml(filteredData, configuration, paths, next){
 
 					callback(null, templateData);
 
-				}				
+				}
 
 			});
 
 		},
 
 		//Then, create the content
-		function(templateData, callback){
+		function(templateData, callback) {
 
 			//Compile the template
 			var tmpl = _.template(templateData, {
@@ -169,27 +170,27 @@ function _createHtml(filteredData, configuration, paths, next){
 			//Next
 			callback(null, html);
 
-		}, 
+		},
 
 		//Then, create the .html
 		//TODO: Check if the file created is to heavy
-		function(html, callback){
+		function(html, callback) {
 
 			//Ensure that the file exists
 			fs.ensureFile(configuration.output, function(err) {
 
 				//Check errors
-				if(err){
+				if (err) {
 
 					callback(new Error('There was an error creating the .html: ' + err));
 
 				} else {
 
 					//Write the HTML into the .html
-					fs.writeFile(configuration.output, html, function(error){
+					fs.writeFile(configuration.output, html, function(error) {
 
 						//Check errors
-						if(error){
+						if (error) {
 
 							callback(new Error('There was an error writing the .html: ' + error));
 
@@ -208,7 +209,7 @@ function _createHtml(filteredData, configuration, paths, next){
 
 		}
 
-	], function(err, dataHtml){
+	], function(err, dataHtml) {
 
 		//Next
 		next(err, dataHtml);

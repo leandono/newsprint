@@ -8,7 +8,6 @@ var htmlToText = require('html-to-text');
 var _ = require('lodash');
 _.mixin(require('lodash-deep'));
 
-
 /**
  * Private constants
  */
@@ -24,11 +23,11 @@ var _SUBJECT = '[NewSprint] Sprint Newsletter';
 function init(html, configuration, paths, callback) {
 
 	//Check if the configuration for the email exists
-	if(_.deepGet(configuration, 'sprint.mail')){
+	if (_.deepGet(configuration, 'sprint.mail')) {
 
 		//Mail options
 		var mailOptions = {
-			subject: _.deepGet(configuration, 'sprint.mail.subject') ? configuration.sprint.mail.subject : _SUBJECT, 
+			subject: _.deepGet(configuration, 'sprint.mail.subject') ? configuration.sprint.mail.subject : _SUBJECT,
 			text: htmlToText.fromString(html),
 			html: html
 		};
@@ -37,18 +36,18 @@ function init(html, configuration, paths, callback) {
 		var transporter = nodemailer.createTransport();
 
 		//Try to send
-		transporter.sendMail(_.assign(mailOptions, configuration.sprint.mail), function(err, info){
+		transporter.sendMail(_.assign(mailOptions, configuration.sprint.mail), function(err, info) {
 
 			//Check errors
-			if(err){
+			if (err) {
 
 				callback('There was an error sending the newsletter: ' + err);
 
-			//Ok!
+				//Ok!
 			} else {
 
 				//Check if there errors in the response
-				if(info.errors.length){
+				if (info.errors.length) {
 
 					callback('There was an error sending the newsletter: ' + info.errors.join(' '));
 

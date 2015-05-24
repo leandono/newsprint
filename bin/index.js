@@ -9,20 +9,17 @@ var program = require('commander');
 var path = require('path');
 var pkg = require('../package.json');
 
-
 /**
  * Private modules
  */
 var actions = require('./actions');
 var libs = require('./libs');
 
-
 /**
  * Globals
  */
 
 GLOBAL.libs = libs;
-
 
 /**
  * Private variables
@@ -31,7 +28,6 @@ var _paths = {
 	root: path.normalize(__dirname),
 	current: path.normalize(process.cwd())
 };
-
 
 /**
  * Program commands
@@ -49,29 +45,29 @@ program
 	.option('-p, --sprint <path>', 'path for the sprint file. defaults to ./sprint.json')
 	.option('-o, --output <path>', 'path where save the newsletter html. defaults to ./newsletter.html')
 	.option('-s, --send', 'try to send by email the newsletter. false by default')
-	.action(function(env){
+	.action(function(env) {
 
 		var options = {};
 
-		if(env.config){
+		if (env.config) {
 			options.config = env.config;
 		}
 
-		if(env.sprint){
+		if (env.sprint) {
 			options.sprint = env.sprint;
 		}
 
-		if(env.output){
+		if (env.output) {
 			options.output = env.output;
 		}
 
-		if(env.send){
+		if (env.send) {
 			options.send = env.send;
 		}
 
-		actions.create.init(options, _paths, function(err){
+		actions.create.init(options, _paths, function(err) {
 
-			if(err){
+			if (err) {
 
 				libs.logger.error(err);
 
@@ -88,7 +84,6 @@ program
 	});
 
 program.parse(process.argv);
-
 
 /**
  * Default behavior
