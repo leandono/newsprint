@@ -53,16 +53,17 @@ function init(data, configuration, paths, callback) {
 function _sortFilterData(data, configuration, paths, next) {
 
 	//Check if there are a customization for the lists
-	if (_.deepGet(configuration, 'sprint.content.lists')) {
+	if (_.deepHas(configuration, 'sprint.content.lists')) {
 
-		//Filtered data
-		var filtered = _.findByValues(data.lists, 'name', _.pluck(configuration.sprint.content.lists, 'name'));
+		//Filter the lists
+		var filtered = _.findByValues(data.lists, 'name', _.pluck(configuration.sprint
+			.content.lists, 'name'));
 
 		//Sortered data
 		var sortered = [];
 
 		//For each list
-		async.each(configuration.sprint.content.lists, function(list, callback) {
+		async.each(configuration.sprint.content.lists, function(list, nextList) {
 
 			//Find the list
 			var finded = _.find(filtered, {
@@ -75,13 +76,30 @@ function _sortFilterData(data, configuration, paths, next) {
 				//Save the description
 				finded.desc = list.desc;
 
+				//If there are cards and labels to filter
+				if (list.labels.length && finded.cards.length) {
+
+					//Check if the card has some specific label
+					var cards = _.filter(finded.cards, function(card) {
+
+						var intersection = _.intersection(_.map(card.labels, 'name'), list.labels);
+
+						return intersection.length;
+
+					});
+
+					//Save the cards filtered
+					finded.cards = cards;
+
+				}
+
 				//Find the list in the filtered data
 				sortered.push(finded);
 
 			}
 
 			//Go go!
-			callback();
+			nextList();
 
 		}, function() {
 
@@ -129,7 +147,8 @@ function _createHtml(filteredData, configuration, paths, next) {
 				//Check errors
 				if (err) {
 
-					callback(new Error('There was an error reading the template file: ' + err));
+					callback(new Error('There was an error reading the template file: ' +
+						err));
 
 				} else {
 
@@ -192,7 +211,8 @@ function _createHtml(filteredData, configuration, paths, next) {
 						//Check errors
 						if (error) {
 
-							callback(new Error('There was an error writing the .html: ' + error));
+							callback(new Error('There was an error writing the .html: ' +
+								error));
 
 						} else {
 

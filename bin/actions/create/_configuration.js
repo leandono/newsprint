@@ -246,6 +246,10 @@ function _validateConfiguration(configuration, next) {
 											desc: {
 												optional: true,
 												type: 'string'
+											},
+											labels: {
+												optional: true,
+												type: 'array'
 											}
 										}
 									}
