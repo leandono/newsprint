@@ -44,6 +44,7 @@ program
 	.option('-c, --config <path>', 'path for the configuration file. defaults to ./config.json')
 	.option('-p, --sprint <path>', 'path for the sprint file. defaults to ./sprint.json')
 	.option('-o, --output <path>', 'path where save the newsletter html. defaults to ./newsletter.html')
+	.option('-b, --open', 'after created, open the newsletter in the browser. false by default')
 	.option('-s, --send', 'try to send by email the newsletter. false by default')
 	.action(function(env) {
 
@@ -59,6 +60,10 @@ program
 
 		if (env.output) {
 			options.output = env.output;
+		}
+
+		if (env.open) {
+			options.open = env.open;
 		}
 
 		if (env.send) {

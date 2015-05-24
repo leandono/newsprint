@@ -6,6 +6,7 @@
 var async = require('async');
 var _ = require('lodash');
 var path = require('path');
+var opener = require('opener');
 
 /**
  * Private modules
@@ -25,6 +26,7 @@ function init(cliOptions, paths, callback) {
 		config: path.join(paths.current, 'config.json'),
 		sprint: path.join(paths.current, 'sprint.json'),
 		output: path.join(paths.current, 'newsletter.html'),
+		open: false,
 		send: false
 	};
 
@@ -117,11 +119,31 @@ function init(cliOptions, paths, callback) {
 
 						libs.logger.info('Newsletter sent successfully...');
 
-						next();
+						next(null, configuration);
 
 					}
 
 				});
+
+			} else {
+
+				next(null, configuration);
+
+			}
+
+		},
+
+		//Try to open the newsletter in the browser
+		function(configuration, next) {
+
+			//Check the config
+			if (configuration.open) {
+
+				libs.logger.info('Opening newsletter in default browser..');
+
+				opener(configuration.output);
+
+				next();
 
 			} else {
 
