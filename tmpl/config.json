@@ -1,0 +1,14 @@
+{
+	"trello": {
+		"key": "<key>",
+		"token": "<token>",
+		"board": "<board>"
+	},
+	"mailer": {
+		"service": "<service>",
+		"auth": {
+			"user": "<user>",
+			"pass": "<pass>"
+		}
+	}
+}

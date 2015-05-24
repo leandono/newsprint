@@ -2,9 +2,11 @@
 
 Create and send a beautiful, mobile-friendly, newsletter/resume of your current sprint/work using the information reflected in your Trello board.
 
-> Inspired by this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
+## Resume
 
-NewSprint can create the newsletter reading all the cards in the board (or only in certain lists), showing descriptions, labels, members, covers and status, with introduction and final texts (see [customization](https://github.com/rodati/newsprint#sprintjson-optional) for more) and send the result using one of [these services](https://github.com/andris9/nodemailer-wellknown#supported-services).
+NewSprint allow you create a newsletter reading all (or specific) cards in Trello, each one with their title, link, cover, description, labels and members. The result can be customized ([more](https://github.com/rodati/newsprint#sprintjson-optional)) and be sent using one of [these services](https://github.com/andris9/nodemailer-wellknown#supported-services).
+
+> This module is inspired by this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
 
 ## Preview
 
@@ -22,255 +24,86 @@ npm install newsprint -g
 newsprint create [options]
 ```
 
-### Options
+#### Options
 
-- `-c, --config <path>`  path for the configuration file. defaults to `./config.json`
-- `-p, --sprint <path>`  path for the sprint file. defaults to `./sprint.json`
-- `-o, --output <path>`  path where save the newsletter html. defaults to `./newsletter.html`
-- `-s, --send`           try to send by email the newsletter. `false` by default
-- `-h, --help`           output usage information
+- `-c, --config <path>` path for the configuration file. defaults to `./config.json`
+- `-p, --sprint <path>` path for the sprint file. defaults to `./sprint.json`
+- `-o, --output <path>` path where save the newsletter html. defaults to `./newsletter.html`
+- `-b, --open'` after created, open the newsletter in the browser. false by default
+- `-s, --send` try to send by email the newsletter. `false` by default
+- `-h, --help` output usage information
 
-### Examples
+#### Examples
 
-#### Create the newsletter in HTML
+##### Create and open the newsletter
 ```
-newsprinte create --config ./config.json
+newsprinte create --config ./config.json --open
 ```
 
-#### Create a custom newsletter in HTML
+##### Create a custom newsletter
 ```
 newsprinte create --config ./config.json --sprint ./sprint-06-04-2015.json
 ```
 
-#### Create a custom newsletter in HTML and send it
+##### Create a custom newsletter and send it
 ```
 newsprinte create --config ./config.json --sprint ./sprint.json --send
 ```
 
 ## Configuration
 
-Before use the module, you need to create some configuration files to get the information from Trello, create the newsletter and send it. 
+Before use NewSprint, you need to create some configuration files to get the information from Trello, create the newsletter and send it. 
 
-**Note**: You can get a dummy copy to use in the [tmpl](https://github.com/rodati/newsprint/tree/master/tmpl) folder.
+### config.json
 
-### config.json (required)
+This file has some required configuration. You can get a dummy copy to use from [here](https://github.com/rodati/newsprint/tree/master/tmpl/config.json).
 
-```js
-{
+- **trello**: Required. **Important**: To get every configuration you need to be [logged into Trello](https://trello.com/login).
+	- **key**: Complete this field getting the information from [here](https://trello.com/app-key).
+	- **token**: To get the token, go to `https://trello.com/1/connect?key=<KEY>&name=NewSprint&response_type=token&expiration=never` and click Allow. **Important**: you need to replace `<KEY>` in the URL with the key obtained in the previous step.
+	- **board**: Complete this getting the hash between `https://trello.com/b/` and the name of the board from the board's URL. For example, for `https://trello.com/b/nC8QJJoZ/trello-development`, the hash is `nC8QJJoZ`.
 
-	/**
-	 * Trello configuration. Required
-	 * To get this information you need to be logged into Trello: https://trello.com/login
-	 */
-	"trello": {
+- **mailer**: Optional. Configuration to send the newsletter. 
+	- **service**: Complete this with one the supported services from [this list](https://github.com/andris9/nodemailer-wellknown#supported-services).
+	- **auth**: Authentification to connect to the supported service.
+		- **user**: User to use.
+		- **pass**: Password to use.
 
-		/**
-		 * To get the key, go to https://trello.com/app-key
-		 */
-		"key": "<key>",
 
-		/**
-		 * Then, to get the token,
-		 * go to https://trello.com/1/connect?key=<your key>&name=NewSprint&response_type=token&expiration=never
-		 * and click Allow.
-		 * Note: You need insert your token in the URL
-		 */
-		"token": "<token>",
+### sprint.json
+This file is optional and allows you customize the newsletter and choose the way to send it. You can get a dummy copy to use from [here](https://github.com/rodati/newsprint/tree/master/tmpl/sprint.json).
 
-		/**
-		 * Finally, go to your board and get the hash
-		 * between https://trello.com/b/ and the name of the board from the URL.
-		 * For example: for https://trello.com/b/nC8QJJoZ/trello-development the hash is nC8QJJoZ
-		 */
-		"board": "<board>"
-	},
+- **mail**: Options to send the email properly. Some of these options are required if you want send the newsletter.
+	- **subject**: Required.
+	- **from**: Required.
+	- **to**: Required. Multiple emails separated by commas.
+	- **cc**: Optional. Multiple emails separated by commas.
+	- **bcc**: Optional. Multiple emails separated by commas.
+	- **replyTo**: Optional.
 
-	/**
-	 * Mailer configuration. Optional
-	 * Internally the module use nodemailer: https://www.npmjs.com/package/nodemailer
-	 */
-	"mailer": {
+- **content**: Optional. Configuration to customize the content of the newsletter. 
+	- **title**: Optional. The title of the newsletter.
+	- **subtitle**: Optional. The subtitle of the newsletter.
+	- **intro**: Optional. A text to use as introduction. Every item of the array is a paragraph. **Note**: You can use markdown.
+	- **lists**: Optional. An array of lists where get the information.
+		- **name**: Required. The name of the list.
+		- **desc**: Optional. A description for the list.
+		- **labels**: Optional. An array of labels to filter the cards of the list.
+	- **final**: Optional. A text to use as final. Every item of the array is a paragraph. **Note**: You can use markdown.
 
-		/**
-		 * Supported services from this list: https://github.com/andris9/nodemailer-wellknown#supported-services
-		 */
-		"service": "<service>",
+- **template**: Optional. Configuration to customize the template of the newsletter.
+	- **styles**: Optional. Styles configuration
+		- **header**: Optional. Styles for the header.
+			- **backgroundColor**: Optional. Background color.
+			- **color**: Optional. Font color.
+		- **headline**: Optional. Styles for the headlines.
+			- **backgroundColor**: Optional. Background color.
+			- **color**: Optional. Font color.
 
-		/**
-		 * User and pass to connect to the service
-		 */
-		"auth": {
-			"user": "<user>",
-			"pass": "<pass>"
-		}
 
-	}
+## TODO & CHANGELOG
 
-}
-```
-
-### sprint.json (optional)
-This file allows you customize the newsletter and choose to who send it.
-
-```js
-{
-
-	/**
-	 * Options to send the email properly
-	 */
-	"mail": {
-
-		/**
-		 * The subject. Required
-		 */
-		"subject": "Lorem Ipsum News",
-
-		/**
-		 * From who. Required
-		 */
-		"from": "Dude <dude@loremipsum.com>",
-
-		/**
-		 * To who. Required
-		 */
-		"to": "team@loremipsum.com",
-
-		/**
-		 * Whit copy. Optional
-		 */
-		"cc": "leader@loremipsum.com",
-
-		/**
-		 * Whit blind carbon copy. Optional
-		 */
-		"bcc": "ceo@loremipsum.com",
-
-		/**
-		 * Reply to. Optional
-		 */
-		"replyTo": "another.dude@loremipsum.com"
-
-	},
-
-	/**
-	 * Options to customize the content of the newsletter. Optional
-	 */
-	"content": {
-
-		/**
-		 * The title of the newsletter. Optional
-		 */
-		"title": "Lorem Ipsum",
-
-		/**
-		 * Subtitle. Optional
-		 */
-		"subtitle": "Sprint Newsletter",
-
-		/**
-		 * An introduction. Optional
-		 * Note: You can use markdown
-		 */
-		"intro": [
-			"# Welcome!",
-			"This is a simple introduction using markdown"
-		],
-
-		/**
-		 * The order and lists from Trello where get the information. Optional
-		 */
-		"lists": [{
-
-			/**
-			 * The name of the list. Required
-			 */
-			"name": "Done",
-
-			/**
-			 * A description of the list. Optional
-			 */
-			"desc": "Finished tasks of the current sprint"
-
-		}, {
-
-			/**
-			 * Another example
-			 */
-			"name": "In Progress",
-			"desc": "Tasks in a early stage"
-
-		}],
-
-		/**
-		 * A final text. Optional
-		 * Note: You can use markdown
-		 */
-		"final": [
-			"# And that's all!",
-			"Cheers!"
-		]
-
-	},
-
-	/**
-	 * Options to customize the template of the newsletter. Optional
-	 */
-	"template": {
-
-		/**
-		 * Some styles. Optional
-		 */
-		"styles": {
-
-			/**
-			 * Styles for the header. Optional
-			 */
-			"header": {
-
-				/**
-				 * Background color. Optional
-				 */
-				"backgroundColor": "#0079bf",
-
-				/**
-				 * Color. Optional
-				 */
-				"color": "#FFF"
-
-			},
-
-			/**
-			 * Styles for the headlines. Optional
-			 */
-			"headline": {
-
-				/**
-				 * Background color. Optional
-				 */
-				"backgroundColor": "#0079bf",
-
-				/**
-				 * Color. Optional
-				 */
-				"color": "#FFF"
-				
-			}
-		}
-	}
-}
-```
-
-## TODO
-
-- Allow custom templates
-- Command to create the `config.json` and `sprint.json`
-- Check if the newsletter is too heavy to send
-- Read only cards with certains labels
-- Tests
-
-## CHANGELOG
-
-- 05/03/2015: First version
+For enhancements, new features and fixes of every release: [https://trello.com/b/DsSXlMFh/newsprint](https://trello.com/b/DsSXlMFh/newsprint)
 
 ## License
 

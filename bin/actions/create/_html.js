@@ -131,7 +131,7 @@ function _sortFilterData(data, configuration, paths, next) {
 function _createHtml(filteredData, configuration, paths, next) {
 
 	var tmplFolder = path.join(paths.root, '..', 'tmpl');
-	var template = path.join(tmplFolder, 'newsletter.tmpl.html');
+	var template = path.join(tmplFolder, 'newsletter.html');
 
 	//Process in a waterfall
 	async.waterfall([

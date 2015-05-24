@@ -1,7 +1,10 @@
 # Custom
 config.json
+!tmpl/config.json
 sprint.json
+!tmpl/sprint.json
 *.html
+!tmpl/newsletter.html
 .DS_Store
 
 # Logs
