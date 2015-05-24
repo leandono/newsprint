@@ -709,10 +709,10 @@
 				background: #fafafa;
 			}
 			table.header{
-				background: <% if(_.deepGet(template, 'styles.header.backgroundColor')) { %><%= template.styles.header.backgroundColor %><% } else { %>#0079bf<% } %>;
+				background: <% if(_.deepHas(template, 'styles.header.backgroundColor')) { %><%= template.styles.header.backgroundColor %><% } else { %>#0079bf<% } %>;
 			}
 			table.header td{
-				color: <% if(_.deepGet(template, 'styles.header.color')) { %><%= template.styles.header.color %><% } else { %>#FFF<% } %>;
+				color: <% if(_.deepHas(template, 'styles.header.color')) { %><%= template.styles.header.color %><% } else { %>#FFF<% } %>;
 			}
 			table.header h1{
 				color: #FFF;
@@ -744,17 +744,17 @@
 			table.main .content .headline{
 				padding: 8px 0;
 				margin-top: 10px;
-				background: <% if(_.deepGet(template, 'styles.headline.backgroundColor')) { %><%= template.styles.headline.backgroundColor %><% } else { %>#0079bf<% } %>;
+				background: <% if(_.deepHas(template, 'styles.headline.backgroundColor')) { %><%= template.styles.headline.backgroundColor %><% } else { %>#0079bf<% } %>;
 			}
 			table.main .content .headline h1{
 				font-size: 20px;
 				font-weight: bold;
 				margin: 0;
-				color: <% if(_.deepGet(template, 'styles.headline.color')) { %><%= template.styles.headline.color %><% } else { %>#FFF<% } %>;
+				color: <% if(_.deepHas(template, 'styles.headline.color')) { %><%= template.styles.headline.color %><% } else { %>#FFF<% } %>;
 			}
 			table.main .content .headline small{
 				font-size: 12px;
-				color: <% if(_.deepGet(template, 'styles.headline.color')) { %><%= template.styles.headline.color %><% } else { %>#FFF<% } %>;
+				color: <% if(_.deepHas(template, 'styles.headline.color')) { %><%= template.styles.headline.color %><% } else { %>#FFF<% } %>;
 			}
 			table.main .content .card{
 				padding-top: 20px;
