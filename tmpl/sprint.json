@@ -16,7 +16,8 @@
 		],
 		"lists": [{
 			"name": "Done",
-			"desc": "Finished tasks of the current sprint"
+			"desc": "Finished tasks of the current sprint",
+			"labels": ["Enhancement", "New Feature"]
 		}, {
 			"name": "In Progress",
 			"desc": "Tasks in a early stage"
