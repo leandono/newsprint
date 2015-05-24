@@ -172,8 +172,8 @@ function _createHtml(filteredData, configuration, paths, next) {
 
 			//Create the HTML
 			var html = tmpl({
-				content: _.deepHas(configuration, 'sprint.content') || {},
-				template: _.deepHas(configuration, 'sprint.template') || {},
+				content: _.deepGet(configuration, 'sprint.content') || {},
+				template: _.deepGet(configuration, 'sprint.template') || {},
 				data: filteredData
 			});
 
