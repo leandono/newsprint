@@ -1,0 +1,54 @@
+{
+	"mail": {
+		"subject": "Lorem Ipsum - Weekly Resume",
+		"from": "Dude <dude@loremipsum.com>",
+		"to": "team@loremipsum.com",
+		"cc": "leader@loremipsum.com",
+		"bcc": "ceo@loremipsum.com",
+		"replyTo": "another.dude@loremipsum.com"
+	},
+	"content": {
+		"title": "Lorem Ipsum",
+		"subtitle": "Weekly Resume",
+		"intro": [
+			"# Hi!",
+			"This is a simple introduction to our weekly newsletter."
+		],
+		"lists": [{
+			"name": "Released (v0.2.x)",
+			"desc": "New features and enhancements released",
+			"labels": ["Enhancement", "New Feature"]
+		}, {
+			"name": "In Progress",
+			"desc": "Tasks in a early stage"
+		}],
+		"cards": {
+			"labels": [{
+				"name": "New Feature",
+				"text": "New feature!"
+			}, {
+				"name": "Featured",
+				"show": false
+			}, {
+				"name": "Enhancement",
+				"color": "#2ba6cb"
+			}]
+		},
+		"final": [
+			"# And that's all, have a nice week!",
+			"> The Lorem Ipsum Team"
+		]
+	},
+	"template": {
+		"styles": {
+			"header": {
+				"backgroundColor": "#1BBE9E",
+				"color": "#FFF"
+			},
+			"headline": {
+				"backgroundColor": "#1BBE9E",
+				"color": "#FFF"
+			}
+		}
+	}
+}
