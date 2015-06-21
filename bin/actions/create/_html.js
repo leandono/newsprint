@@ -10,7 +10,6 @@ var minify = require('html-minifier').minify;
 var marked = require('marked');
 var path = require('path');
 var _ = require('lodash');
-_.mixin(require('lodash-deep'));
 
 /**
  * Create the HTML for the newsletter using the data requested to Trello
@@ -53,7 +52,7 @@ function init(data, configuration, paths, callback) {
 function _sortFilterData(data, configuration, paths, next) {
 
 	//Check if there are a customization for the lists
-	if (_.deepHas(configuration, 'sprint.content.lists')) {
+	if (_.has(configuration, 'sprint.content.lists')) {
 
 		//Filter the lists
 		var filtered = _.findByValues(data.lists, 'name', _.pluck(configuration.sprint
@@ -172,8 +171,8 @@ function _createHtml(filteredData, configuration, paths, next) {
 
 			//Create the HTML
 			var html = tmpl({
-				content: _.deepGet(configuration, 'sprint.content') || {},
-				template: _.deepGet(configuration, 'sprint.template') || {},
+				content: _.get(configuration, 'sprint.content') || {},
+				template: _.get(configuration, 'sprint.template') || {},
 				data: filteredData
 			});
 

@@ -6,7 +6,6 @@
 var nodemailer = require('nodemailer');
 var htmlToText = require('html-to-text');
 var _ = require('lodash');
-_.mixin(require('lodash-deep'));
 
 /**
  * Private constants
@@ -23,11 +22,11 @@ var _SUBJECT = '[NewSprint] Sprint Newsletter';
 function init(html, configuration, paths, callback) {
 
 	//Check if the configuration for the email exists
-	if (_.deepHas(configuration, 'sprint.mail')) {
+	if (_.has(configuration, 'sprint.mail')) {
 
 		//Mail options
 		var mailOptions = {
-			subject: _.deepHas(configuration, 'sprint.mail.subject') ? configuration.sprint.mail.subject : _SUBJECT,
+			subject: _.has(configuration, 'sprint.mail.subject') ? configuration.sprint.mail.subject : _SUBJECT,
 			text: htmlToText.fromString(html),
 			html: html
 		};
