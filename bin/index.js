@@ -42,6 +42,7 @@ program
 	.command('create')
 	.description('create the newsletter')
 	.option('-c, --config <path>', 'path for the configuration file. defaults to ./config.json')
+	.option('-t, --template <path>', 'path for the custom template file.')
 	.option('-p, --sprint <path>', 'path for the sprint file. defaults to ./sprint.json')
 	.option('-o, --output <path>', 'path where save the newsletter html. defaults to ./newsletter.html')
 	.option('-b, --open', 'after created, open the newsletter in the browser. false by default')
@@ -52,6 +53,10 @@ program
 
 		if (env.config) {
 			options.config = env.config;
+		}
+
+		if (env.template) {
+			options.template = env.template;
 		}
 
 		if (env.sprint) {

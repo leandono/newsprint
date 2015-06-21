@@ -26,6 +26,7 @@ function init(cliOptions, paths, callback) {
 		config: path.join(paths.current, 'config.json'),
 		sprint: path.join(paths.current, 'sprint.json'),
 		output: path.join(paths.current, 'newsletter.html'),
+		template: path.join(paths.root, '..', 'tmpl', 'newsletter.html'),
 		open: false,
 		send: false
 	};

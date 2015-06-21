@@ -8,7 +8,6 @@ var fs = require('fs-extra');
 var juice = require('juice');
 var minify = require('html-minifier').minify;
 var marked = require('marked');
-var path = require('path');
 var _ = require('lodash');
 
 /**
@@ -28,9 +27,14 @@ function init(data, configuration, paths, callback) {
 			_sortFilterData(data, configuration, paths, next);
 		},
 
+		//Then, extend the cards
+		function(filteredData, next) {
+			_extendCards(filteredData, configuration, paths, next);
+		},
+
 		//Then, create the content
-		function(dataProcessed, next) {
-			_createHtml(dataProcessed, configuration, paths, next);
+		function(extendedData, next) {
+			_createHtml(extendedData, configuration, paths, next);
 		}
 
 	], function(err, html) {
@@ -52,7 +56,7 @@ function init(data, configuration, paths, callback) {
 function _sortFilterData(data, configuration, paths, next) {
 
 	//Check if there are a customization for the lists
-	if (_.has(configuration, 'sprint.content.lists')) {
+	if (_.has(configuration, 'sprint.content.lists') && configuration.sprint.content.lists.length) {
 
 		//Filter the lists
 		var filtered = _.findByValues(data.lists, 'name', _.pluck(configuration.sprint
@@ -121,27 +125,103 @@ function _sortFilterData(data, configuration, paths, next) {
 }
 
 /**
- * Create the HTML for the newsletter
- * @param {object}  filteredData  The data request to Trello filtered/sortered (or not)
+ * Extend/overwrite the props of the cards
+ * @param {object}  data  The data request to Trello
  * @param {object} configuration Configuration for the job
  * @param {object} paths Paths of the module and executation
  * @param {function} next Async callback
  */
-function _createHtml(filteredData, configuration, paths, next) {
+function _extendCards(filteredData, configuration, paths, next) {
 
-	var tmplFolder = path.join(paths.root, '..', 'tmpl');
-	var template = path.join(tmplFolder, 'newsletter.html');
+	//Check if there are a customization for the cards
+	if (_.has(configuration, 'sprint.content.cards') && configuration.sprint.content.cards) {
+
+		//For each list
+		async.each(filteredData.lists, function(list, nextList) {
+
+			//Check if there are cards
+			if (list.cards.length) {
+
+				//For each card
+				async.each(list.cards, function(card, nextCard) {
+
+					//Extend the labels
+					if (configuration.sprint.content.cards.labels && configuration.sprint.content.cards.labels.length) {
+
+						var labels = _.map(card.labels, function(label) {
+
+							//Get the custom props
+							var props = _.find(configuration.sprint.content.cards.labels, {
+								'name': label.name
+							});
+
+							if (props) {
+								return _.assign(label, props);
+							} else {
+								return label;
+							}
+
+						});
+
+						//Assign the reference
+						card.labels = labels;
+
+					}
+
+					//Next!
+					nextCard();
+
+				}, function() {
+
+					//Next!
+					nextList();
+
+				});
+
+				//Skip
+			} else {
+
+				nextList();
+
+			}
+
+		}, function() {
+
+			//Save the references
+			filteredData.lists = filteredData.lists;
+
+			//Next!
+			next(null, filteredData);
+
+		});
+
+		//Else, skip
+	} else {
+
+		//Next!
+		next(null, filteredData);
+
+	}
+
+}
+
+/**
+ * Create the HTML for the newsletter
+ * @param {object}  extendedData  The data request to Trello filtered/sortered (or not)
+ * @param {object} configuration Configuration for the job
+ * @param {object} paths Paths of the module and executation
+ * @param {function} next Async callback
+ */
+function _createHtml(extendedData, configuration, paths, next) {
 
 	//Process in a waterfall
 	async.waterfall([
 
 		//Read the template for the newsletter
-		//TODO: Allow custom templates
 		function(callback) {
 
 			//Read the base template
-			//TODO: Check if the file exists
-			fs.readFile(template, function(err, templateData) {
+			fs.readFile(configuration.template, function(err, templateData) {
 
 				//Check errors
 				if (err) {
@@ -173,7 +253,7 @@ function _createHtml(filteredData, configuration, paths, next) {
 			var html = tmpl({
 				content: _.get(configuration, 'sprint.content') || {},
 				template: _.get(configuration, 'sprint.template') || {},
-				data: filteredData
+				data: extendedData
 			});
 
 			//Inline and minify the HTML
