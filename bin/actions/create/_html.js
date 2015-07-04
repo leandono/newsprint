@@ -251,6 +251,7 @@ function _createHtml(extendedData, configuration, paths, next) {
 
 			//Create the HTML
 			var html = tmpl({
+				board: _.get(configuration, 'config.trello.board') || {},
 				content: _.get(configuration, 'sprint.content') || {},
 				template: _.get(configuration, 'sprint.template') || {},
 				data: extendedData
