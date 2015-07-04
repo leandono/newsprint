@@ -38,17 +38,17 @@ newsprint create [options]
 
 ##### Create and open the newsletter
 ```
-newsprinte create --config config.json --open
+newsprint create --config config.json --open
 ```
 
 ##### Create a custom newsletter
 ```
-newsprinte create --config config.json --sprint sprint-06-04-2015.json
+newsprint create --config config.json --sprint sprint-06-04-2015.json
 ```
 
 ##### Create a custom newsletter and send it
 ```
-newsprinte create --config config.json --sprint sprint.json --template custom.html --send
+newsprint create --config config.json --sprint sprint.json --template custom.html --send
 ```
 
 ## Configuration
