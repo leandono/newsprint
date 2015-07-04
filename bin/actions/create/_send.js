@@ -40,6 +40,8 @@ function init(html, configuration, paths, callback) {
 			//Check errors
 			if (err) {
 
+				libs.logger.debug(JSON.stringify(err));
+
 				callback('There was an error sending the newsletter: ' + err);
 
 				//Ok!
@@ -47,6 +49,8 @@ function init(html, configuration, paths, callback) {
 
 				//Check if there errors in the response
 				if (info.errors.length) {
+
+					libs.logger.debug(JSON.stringify(info.errors));
 
 					callback('There was an error sending the newsletter: ' + info.errors.join(' '));
 
