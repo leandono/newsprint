@@ -1,6 +1,6 @@
 {
   "name": "newsprint",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Create and send a beautiful, mobile-friendly, newsletter/resume of your current sprint/work using the information reflected in your Trello board.",
   "main": "bin/index.js",
   "bin": {
