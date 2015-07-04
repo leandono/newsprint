@@ -109,7 +109,7 @@ function _getExtras(t, configuration, next) {
 		'attachments=cover',
 		'attachment_fields=previews,url',
 		'members=true',
-		'member_fields=initials,avatarHash,fullName',
+		'member_fields=initials,avatarHash,fullName,username',
 		'fields=name'
 	];
 
