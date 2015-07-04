@@ -1,7 +1,7 @@
 # Custom
-config.json
+config*.json
 !example/config.json
-sprint.json
+sprint*.json
 !example/sprint.json
 *.html
 !example/template.html
