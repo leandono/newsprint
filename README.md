@@ -173,7 +173,13 @@ Configuration to customize the design of the template of the newsletter. Note: T
 }
 ```
 
-## CHANGELOG & BACKLOG
+## FAQ
+
+### Why `config.json` and `sprint.json` are separately?
+
+The idea for `config.json` is have only the static/technical configuration (like the keys of Trello, email services, etc) that usually is static and `sprint.json` the configuration that can change occasionally (for example, a different text introduction, another people to send the email, etc), so for that, both configuration are separately. But maybe in a future release both can be merged.
+
+### Where is the Changelog?
 
 For enhancements, new features and fixes of every release: [https://trello.com/b/DsSXlMFh/newsprint](https://trello.com/b/DsSXlMFh/newsprint)
 
