@@ -57,7 +57,19 @@ Before use NewSprint, you need to create some configuration files to get the inf
 
 ### config.json
 
-This file has some required configuration to get the information from Trello. [Example](https://github.com/rodati/newsprint/tree/master/example/config.json).
+This file has some required configuration to get the information from Trello. 
+All the options need to be inside a main object like [this](https://github.com/rodati/newsprint/tree/master/example/config.json):
+
+```js
+{
+	"trello": {
+		//Trello options
+	},
+	"mailer": {
+		//Mailer options
+	}
+}
+```
 
 #### Options
 
@@ -92,7 +104,21 @@ Optional object with the configuration to send the newsletter. Note: Internally 
 ```
 
 ### sprint.json
-This file is optional and allows you customize the newsletter and choose the way to send it. [Example](https://github.com/rodati/newsprint/tree/master/example/sprint.json).
+This file is optional and allows you customize the newsletter and choose the way to send it.  All the options need to be inside a main object like [this](https://github.com/rodati/newsprint/tree/master/example/sprint.json):
+
+```js
+{
+	"mail": {
+		//Mail options
+	},
+	"content": {
+		//Content options
+	},
+	"template": {
+		//Styles options
+	}
+}
+```
 
 #### Options
 
