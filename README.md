@@ -162,12 +162,13 @@ Configuration to customize the content of the newsletter.
 		"desc": "Tasks in a early stage"
 	}],
 	"cards": {
-		"labels": [{ // Configuration for the labels of the board
-			"name": "New Feature", // The name of the label in Trello
-			"text": "New feature!" // A text to use as name in the newsletter
+		"labels": [{ // Configuration to extend/overwrite the labels of the board
+			"name": "New", // The name/reference of the label in Trello
+			"text": "New!" // A text to use as name in the newsletter
 		}, {
-			"name": "Featured",
-			"show": false // Show o not the label in the newsletter
+			"name": "Important",
+			"featured": true, // Highlight the card in the newsletter
+			"show": false // Show or not the label in the newsletter
 		}, {
 			"name": "Enhancement",
 			"color": "#2ba6cb" // A color for the label
