@@ -765,8 +765,8 @@
         font-size: 11px;
     }
     .card-name{
-        line-height: 1;
-        margin-bottom: 10px;
+        line-height: 1.2;
+        margin-bottom: 25px;
     }
     .card-name a{
         color: #000;
@@ -794,7 +794,7 @@
     	color: #000;
         height: 15px;
         width: 13px;
-        font-size: 10px;
+        font-size: 10px!important;
         float: right;
         display: block;
         text-align: center;
@@ -802,6 +802,7 @@
         background-color: #FAFAFA;
         border: 1px solid #DDD;
         padding: 0 3px 4px 3px;
+        margin-left: 5px;
     }
     @media only screen and (max-width: 600px) {
 
@@ -851,7 +852,7 @@
                                     <div class="list">
 
                                         <!-- List Name -->
-                                        <h1 class="list-name"><a href="https://trello.com/search?q=board:<%= board %> list:<%= list.name %> is:open" target="_blank"><%= list.name %></a></h1>
+                                        <h1 class="list-name"><a href='https://trello.com/search?q=board:<%= board %> list:"<%= list.name %>" is:open' target="_blank"><%= list.name %></a></h1>
                                         <h2 class="list-desc"><%= list.desc %></h2>
                                         <!-- End list name -->
 
@@ -904,10 +905,12 @@
                                                         <td class="six sub-columns last">
                                                             <!-- Members -->
                                                             <% if(card.idMembers && card.idMembers.length) { %>
+                                                            	<div class="card-members">
                                                                 <% _.forEach(card.idMembers, function(idMember) { %>
                                                                     <% var member = _.find(extras.members, { 'id': idMember }); %>
                                                                     <a href="https://trello.com/<%= member.username %>" target="_blank" title="Assigned to <%= member.fullName %>" class="card-member car-member-initials"><%= member.initials %></a>
                                                                 <%  }); %>
+                                                                </div>
                                                             <% } %>
                                                             <!-- End members -->
                                                         </td>
@@ -919,7 +922,7 @@
 
                                                 <tr>
 
-                                                    <td class="card-featured twelve sub-columns">
+                                                    <td class="card-featured twelve sub-columns last" colspan="2">
 
                                                         <!-- Name -->
                                                         <h2 class="card-name">
@@ -1002,10 +1005,12 @@
                                                         <td class="six sub-columns last">
                                                             <!-- Members -->
                                                             <% if(card.idMembers && card.idMembers.length) { %>
+                                                            	<div class="card-members">
                                                                 <% _.forEach(card.idMembers, function(idMember) { %>
                                                                     <% var member = _.find(extras.members, { 'id': idMember }); %>
-                                                                    <a href="https://trello.com/<%= member.username %>" target="_blank" title="Assigned to <%= member.fullName %>" class="card-member car-member-initials"><%= member.initials %></span>
+                                                                    <a href="https://trello.com/<%= member.username %>" target="_blank" title="Assigned to <%= member.fullName %>" class="card-member car-member-initials"><%= member.initials %></a>
                                                                 <%  }); %>
+                                                                </div>
                                                             <% } %>
                                                             <!-- End members -->
                                                         </td>
@@ -1017,7 +1022,7 @@
 
                                                 <tr>
 
-                                                    <td class="<% if(preview) { %> ten sub-columns <% } else { %>twelve sub-columns last<% } %>">
+                                                    <td <% if(preview) { %> class="ten sub-columns" <% } else { %> class="twelve sub-columns last" colspan="2"<% } %>>
 
                                                         <!-- Name -->
                                                         <h5 class="card-name">
