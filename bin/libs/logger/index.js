@@ -4,7 +4,6 @@
  * Main modules
  */
 var logger = require('winston');
-var program = require('commander');
 
 /**
  * Logger setup
@@ -22,8 +21,6 @@ logger.add(logger.transports.Console, {
 	silent: false,
 	colorize: true
 });
-
-program.parse(process.argv);
 
 /**
  * Public methods exported
