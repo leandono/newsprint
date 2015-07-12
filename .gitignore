@@ -5,6 +5,7 @@ sprint*.json
 !example/sprint.json
 *.html
 !example/simple-template.html
+!example/output.html
 .DS_Store
 
 # Logs
