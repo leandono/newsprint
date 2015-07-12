@@ -1,6 +1,6 @@
 {
   "name": "newsprint",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Create and send a beautiful, mobile-friendly, newsletter  using  your Trello board.",
   "main": "bin/index.js",
   "bin": {
