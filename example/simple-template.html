@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width"/>
+    <title><%= content.title %></title>
+    <style>
+    body, h1, h2, h3, h4, h5, h6, p, td{ 
+      color: #222222;
+      font-family: "Helvetica", "Arial", sans-serif; 
+      line-height: 1.3;
+    }
+    h1, h2, h3, h4, h5, h6{
+      word-break: normal;
+    }
+    table.body{
+      width: 580px;
+      margin: 0 auto;
+    }
+    div.header{
+      padding: 10px 0;
+      background-color: <% if(_.has(template, 'styles.header.backgroundColor')) { %><%= template.styles.header.backgroundColor %><% } else { %>#0079bf<% } %>;
+    }
+    div.header h1, div.header h2{
+      color: <% if(_.has(template, 'styles.header.color')) { %><%= template.styles.header.color %><% } else { %>#FFF<% } %>;
+    }
+    </style>
+  </head>
+
+  <body>
+
+    <table class="body">
+        <tr>
+          <td align="center" valign="top">
+            
+            <!-- Intro -->
+            <% if(content.intro) { %>
+              <div>
+                <%= md(content.intro.join('\n')) %>
+              </div>
+            <% } %>
+            <!-- End intro -->
+
+            <div class="header">
+
+              <!-- Title -->
+              <% if(content.title) { %>
+                <h1><%= content.title %></h1>
+              <% } %>
+              <!-- End title -->
+
+              <!-- Subtitle -->
+              <% if(content.subtitle) { %>
+                <h2><%= content.subtitle %></h2>
+              <% } %>
+              <!-- End subtitle -->
+
+            </div>
+
+            <!-- Lists -->
+            <% if(data.lists && data.lists.length) { %>
+
+              <% _.forEach(data.lists, function(list) { %>
+
+                <!-- List name -->
+                <h3><%= list.name %></h3>
+                <% if(list.desc) { %>
+                  <p><%= list.desc %></p>
+                <% } %>
+                <!-- End list name -->
+
+                <hr>
+
+                <!-- Cards -->
+                <% if(list.cards && list.cards.length) { %>
+
+                  <% _.forEach(list.cards, function(card) { %>
+
+                    <% 
+                      var featured = _.find(card.labels, { 'featured': true });
+                      var extras = _.find(data.extras, function(extra){
+                        return extra.id === card.id;
+                      });
+                    %>
+
+                    <!-- Name -->
+                    <% if(featured){ %>
+                      <h1><a href="<%= card.url %>" target="_blank"><%= card.name %></a></h1>  
+                    <% } else { %>
+                      <h2><a href="<%= card.url %>" target="_blank"><%= card.name %></a></h2>  
+                    <% } %>
+                    <!-- End name -->
+
+                    <!-- Labels -->
+                    <% if(card.labels && card.labels.length) { %>
+
+                      <p>Labels: 
+                        <%  _.forEach(card.labels, function(label) { %>
+
+                          <% if(label.show !== false) { %>
+
+                            <span style="background-color: <% if(label.color) { %> <%= label.color %> <% } else { %> black <% } %>;">
+                              <% if(label.text) { %><%= label.text %><% } else { %><%= label.name %><% } %>
+                            </span> &nbsp;
+
+                          <% } %>
+
+                        <%  }); %>
+                      </p>
+
+                    <% } %>
+                    <!-- End labels -->
+
+                    <!-- Members -->
+                    <% if(card.idMembers && card.idMembers.length) { %>
+                      
+                      <p>Assigned to: 
+                        <% _.forEach(card.idMembers, function(idMember) { %>
+
+                          <% var member = _.find(extras.members, { 'id': idMember }); %>
+
+                          <% if(member.avatarHash) { %>
+
+                            <img alt="<%= member.fullName %>" title="<%= member.fullName %>" width="25" height="25" src="https://trello-avatars.s3.amazonaws.com/<%= member.avatarHash %>/30.png">
+
+                          <% } else { %>
+
+                            <span title="<%= member.fullName %>"><%= member.initials %></span>
+
+                          <% } %>
+
+                        <%  }); %>
+                      </p>
+
+                    <% } %>
+                    <!-- End members -->
+
+                    <!-- Attachs -->
+                    <% if(extras.attachments && extras.attachments.length) { %>
+
+                        <% 
+
+                          var largePreview = _.findLast(extras.attachments[0].previews, function(preview){
+                            return preview.width >= 580;
+                          });
+
+                          var review = _.findLast(extras.attachments[0].previews, function(preview){
+                            return preview.width < 580;
+                          });
+
+                        %>
+
+                        <% if(largePreview) { %>
+
+                          <img style="width:580px;" src="<%= largePreview.url %>">
+                        
+                        <% } else { %>
+
+                          <img style="width:<%= review.width %>px;" src="<%= review.url %>">
+
+                        <% } %>
+
+                    <% } %>
+                    <!-- End attachs -->
+
+                    <!-- Description -->
+                    <% if(card.desc) { %>
+                      <%= md(card.desc) %>
+                    <% } %>
+                    <!-- End description -->
+
+                    <hr>
+
+                  <% }); %>
+
+                <% } %>
+                <!-- End cards -->
+
+              <% }); %>
+
+            <% } %>
+            <!-- End lists -->
+
+            <!-- Final -->
+            <% if(content.final) { %>
+              <div>
+                <%= md(content.final.join('\n')) %>
+              </div>
+            <% } %>
+            <!-- End final -->
+
+        </td>
+      </tr>
+    </table>
+
+  </body>
+</html>
