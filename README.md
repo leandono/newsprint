@@ -1,16 +1,18 @@
 # NewSprint
 
-Create and send a beautiful, mobile-friendly, newsletter/resume of your current sprint/work using the information reflected in your Trello board.
+Create and send a beautiful, mobile-friendly, newsletter  using  your Trello board.
 
 ## Resume
 
-NewSprint allows you create a newsletter reading all (or some) cards of Trello, each one showing their title, link, cover, description, labels and members. The result can be [customized](https://github.com/rodati/newsprint#sprintjson-optional) and be sent using one of [these services](https://github.com/andris9/nodemailer-wellknown#supported-services).
+NewSprint allows you create a newsletter reading all (or some) lists/cars of Trello. The result can be [customized](https://github.com/rodati/newsprint#sprintjson-optional) and sent using one of [these services](https://github.com/andris9/nodemailer-wellknown#supported-services).
 
 > Inspired by this article of The Changelog: [https://changelog.com/trello-as-a-cms/](https://changelog.com/trello-as-a-cms/)
 
-## Example
+## Example of newsletter
 
-![Preview NewSprint](http://i.imgur.com/PNwwKHc.png)
+Click on the image to view the HTML generated.
+
+[![Preview NewSprint](http://i.imgur.com/WbIBVzV.png)](https://cdn.rawgit.com/rodati/newsprint/master/example/output.html)
 
 ## Installation
 
@@ -53,7 +55,7 @@ newsprint create --config config.json --sprint sprint.json --template custom.htm
 
 ## Configuration
 
-Before use NewSprint, you need to create some configuration files to get the information from Trello, create the newsletter and send it. 
+Before use NewSprint, you need to create two configuration files: `config.json` and `sprint.json` (optional). 
 
 ### config.json
 
@@ -185,7 +187,7 @@ Configuration to customize the content of the newsletter.
 Optional  
 Type: `Object`  
 
-Configuration to customize the design of the template of the newsletter. Note: This object is passed directly to the template. [Example](https://github.com/rodati/newsprint/tree/master/example/template.html) of custom template.
+Configuration to customize the design of the template of the newsletter. Note: This object is passed directly to the template. [Example](https://github.com/rodati/newsprint/tree/master/example/simple-template.html) of custom template.
 
 ```js
 {
@@ -204,12 +206,12 @@ Configuration to customize the design of the template of the newsletter. Note: T
 
 ### Why `config.json` and `sprint.json` are separately?
 
-The idea for `config.json` is have only the static/technical configuration (like the keys of Trello, email services, etc) that usually is static and `sprint.json` the configuration that can change occasionally (for example, a different text introduction, another people to send the email, etc), so for that, both configuration are separately. But maybe in a future release both can be merged.
+The idea for `config.json` is have the technical configuration (Trello's keys, email auth, etc). And, for `sprint.json`, the customization configuration. So for that, both are in separate files.
 
 ### Where is the Changelog?
 
-For enhancements, new features and fixes of every release: [https://trello.com/b/DsSXlMFh/newsprint](https://trello.com/b/DsSXlMFh/newsprint)
+The changelog (and enhancements, new features and fixes of every release) are in the [Trello board of NewSprint](https://trello.com/b/DsSXlMFh/newsprint)
 
-## License
+### License?
 
 MIT
